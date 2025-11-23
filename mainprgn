@@ -1,0 +1,154 @@
+# -----------------------------------------------------------
+#               MOVIE RECOMMENDATION SYSTEM
+# -----------------------------------------------------------
+movies = [
+    {"title": "3 Idiots", "genre": "Comedy, Drama", "actors": "Aamir Khan", "year": 2009},
+    {"title": "Dangal", "genre": "Drama, Sports", "actors": "Aamir Khan", "year": 2016},
+    {"title": "Baahubali", "genre": "Action, Fantasy", "actors": "Prabhas", "year": 2015},
+    {"title": "Kantara", "genre": "Thriller, Drama", "actors": "Rishab Shetty", "year": 2022},
+    {"title": "Gully Boy", "genre": "Drama, Musical", "actors": "Ranveer Singh", "year": 2019},
+    {"title": "RRR", "genre": "Action, Historical", "actors": "Ram Charan, Jr NTR", "year": 2022},
+    {"title": "KGF Chapter 1", "genre": "Action, Drama", "actors": "Yash", "year": 2018},
+    {"title": "Koi Mil Gaya", "genre": "Sci-Fi, Drama", "actors": "Hrithik Roshan", "year": 2003},
+    {"title": "Drishyam", "genre": "Thriller, Crime", "actors": "Ajay Devgn", "year": 2015},
+    {"title": "The Conjuring", "genre": "Horror, Supernatural", "actors": "Vera Farmiga", "year": 2013},
+    {"title": "Inception", "genre": "Sci-Fi, Thriller", "actors": "Leonardo DiCaprio", "year": 2010},
+    {"title": "The Dark Knight", "genre": "Action, Crime", "actors": "Christian Bale", "year": 2008},
+    {"title": "Avatar", "genre": "Sci-Fi, Adventure", "actors": "Sam Worthington", "year": 2009},
+    {"title": "Titanic", "genre": "Romance, Drama", "actors": "Leonardo DiCaprio", "year": 1997},
+    {"title": "Avengers Endgame", "genre": "Action, Superhero", "actors": "Robert Downey Jr", "year": 2019},
+]
+# -----------------------------------------------------------
+#  Function: Recommend by Genre
+# -----------------------------------------------------------
+def recommend_by_genre(genre):
+    genre = genre.lower()
+    results = []
+
+    for movie in movies:
+        if genre in movie["genre"].lower():
+            results.append(movie["title"])
+
+    return results
+# -----------------------------------------------------------
+#  Function: Recommend by Actor
+# -----------------------------------------------------------
+def recommend_by_actor(actor):
+    actor = actor.lower()
+    results = []
+
+    for movie in movies:
+        if actor in movie["actors"].lower():
+            results.append(movie["title"])
+
+    return results
+# -----------------------------------------------------------
+#  Function: Recommend by Year Range
+# -----------------------------------------------------------
+def recommend_by_year(start, end):
+    results = []
+
+    for movie in movies:
+        if start <= movie["year"] <= end:
+            results.append(f"{movie['title']} ({movie['year']})")
+
+    return results
+# -----------------------------------------------------------
+#  Function: Recommend Similar Movies
+# -----------------------------------------------------------
+def recommend_similar(movie_name):
+    movie_name = movie_name.lower()
+    target_movie = None
+
+    for movie in movies:
+        if movie["title"].lower() == movie_name:
+            target_movie = movie
+            break
+
+    if not target_movie:
+        return None
+
+    keywords = target_movie["genre"].lower().split(", ")
+    similar = []
+
+    for movie in movies:
+        if movie == target_movie:
+            continue
+
+        for key in keywords:
+            if key in movie["genre"].lower():
+                similar.append(movie["title"])
+                break
+
+    return similar
+# -----------------------------------------------------------
+#                      MAIN MENU
+# -----------------------------------------------------------
+while True:
+    print("\n==============================")
+    print("      MOVIE RECOMMENDATION")
+    print("==============================")
+    print("1. Recommend by Genre")
+    print("2. Recommend by Actor")
+    print("3. Recommend by Year Range")
+    print("4. Recommend Similar Movies")
+    print("5. Exit")
+
+    choice = input("\nEnter your choice (1-5): ")
+
+    # Option 1
+    if choice == "1":
+        genre = input("Enter genre: ")
+        result = recommend_by_genre(genre)
+
+        if result:
+            print("\nMovies found:")
+            for m in result:
+                print("•", m)
+        else:
+            print("No movies found in this genre.")
+
+    # Option 2
+    elif choice == "2":
+        actor = input("Enter actor name: ")
+        result = recommend_by_actor(actor)
+
+        if result:
+            print("\nMovies featuring this actor:")
+            for m in result:
+                print("•", m)
+        else:
+            print("No movies found for this actor.")
+
+    # Option 3
+    elif choice == "3":
+        start = int(input("Enter start year: "))
+        end = int(input("Enter end year: "))
+        result = recommend_by_year(start, end)
+
+        if result:
+            print("\nMovies in this year range:")
+            for m in result:
+                print("•", m)
+        else:
+            print("No movies found in this range.")
+
+    # Option 4
+    elif choice == "4":
+        name = input("Enter movie name: ")
+        result = recommend_similar(name)
+
+        if result:
+            print("\nSimilar movies:")
+            for m in result:
+                print("•", m)
+        else:
+            print("Movie not found or no similar movies available.")
+
+    # Option 5
+    elif choice == "5":
+        print("\nExiting... Goodbye!")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
