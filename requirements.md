@@ -1,53 +1,47 @@
-# Project Statement for the Console Movie Recommender
+# Software Requirements Specification (SRS) for the Console Movie Recommender
 
-- Problem Statement
+    This document outlines the detailed functional and non-functional requirements for the Movie Recommendation System.
 
-  In the early stages of learning data processing and filtering, there is a need for simple, demonstrable projects that showcase fundamental search and logic capabilities. This project addresses the challenge of building a lightweight system that can efficiently retrieve and filter structured data (movies) based on specific user input parameters (Genre, Actor, Year), serving as a clear foundation for more complex recommendation logic.
+1. Functional Requirements (FR)
 
- - Scope of the Project
+These requirements define the specific actions the system must perform to meet the user's needs.
 
-   The scope of this project is strictly limited to a basic, content-based recommendation engine operating entirely within the console environment.
+1.1 Core System Functionality
 
- - In Scope:
+FR001: The application must continuously display a main menu until the user selects the 'Exit' option.
 
-    Implementation of the four core filtering functions: Genre, Actor, Year Range, and Genre Similarity.
+FR002: The application must handle invalid menu choices by prompting the user to re-enter a valid option (1-5).
 
-    Case-insensitive and partial matching logic for inputs (e.g., actor names).
+FR003: The application must clearly print the list of recommended movie titles for any successful query.
 
-    Handling user input via the command line and displaying output to the console.
+FR004: The application must provide a 'No movies found' message when a query yields zero results.
 
-    Utilizing an internal, static dataset (Python list of dictionaries).
+1.2 Recommendation Logic
 
- - Out of Scope (Future Work):
+FR005 (Genre Search): The function must perform a case-insensitive search for a partial match within the movie's genre string.
 
-    Integration with external APIs or databases (e.g., IMDb, TMDB).
+FR006 (Actor Search): The function must perform a case-insensitive search for a partial match within the movie's actor string.
 
-    Graphical User Interface (GUI) or web application frontend.
+FR007 (Year Range): The function must accept two integer inputs (start and end year) and return all movies released within that range (inclusive).
 
-    Machine Learning models or complex collaborative filtering algorithms.
+FR008 (Similar Movies): The function must identify the target movie by title (case-insensitive) and return all other movies that share at least one genre with the target.
 
-    User ratings, personalized history, or dynamic data updates.
+FR009 (Exclusion): The similar movies function must ensure the target movie itself is not included in the output list.
 
-# Target Users
-1. The primary users for this project are focused on 
-   demonstration and foundational learning:
+2. Non-Functional Requirements (NFR)
 
-2. Developers/Students: Individuals learning Python 
-   who need a simple, clear example of data filtering and object-oriented thinking.
+These requirements specify criteria that can be used to judge the operation of the system, such as performance and maintainability.
 
-3. Code Reviewers: Users assessing proficiency in 
-   fundamental data structures and control flow.
+2.1 Performance and Reliability
 
-4. Casual Users: Anyone looking for quick, 
-   non-personalized movie suggestions based on basic attributes.
+NFR001 (Performance): All search and filtering operations must complete and display results instantly (sub-100ms response time).
 
-5. High-Level Features
+NFR002 (Error Handling): The system must gracefully handle non-integer input for year range queries without crashing.
 
-6. Efficient Data Traversal: Uses iterative techniques 
-   to quickly search a small dataset.
+2.2 Maintainability and Usability
 
-7. Modular Function Design: Separates each   
-   recommendation logic into distinct, reusable Python functions.
+NFR003 (Maintainability): The movie dataset must be easily editable and extendable by modifying the movies list at the top of the script.
 
-8. Similarity Matching: Provides a basic 
-   implementation of content-based similarity by matching genre keywords.
+NFR004 (Dependencies): The codebase must be entirely self-contained within a single Python file, with no external library dependencies.
+
+NFR005 (Usability): The console output must be well-formatted using clear headers and simple lists to enhance readability.
